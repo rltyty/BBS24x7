@@ -19,16 +19,20 @@ E.g. user1.login:
 
 where <connection_string> can be:
 
+```
 user1@bbs.mysmth.net
+```
 
 or
 
 host alias you set after `Host` in ~/.ssh/config
 
+```
 E.g.
 Host mysmth.u1			<-----
     Hostname bbs.mysmth.net
     User user1
+```
 
 2. Keep alive when idle
 -----------------------
