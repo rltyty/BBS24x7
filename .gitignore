@@ -1,1 +1,3 @@
 repo_config.sh
+*.pass
+!sample.pass
