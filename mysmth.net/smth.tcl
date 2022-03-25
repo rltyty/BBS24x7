@@ -15,11 +15,11 @@ if { $argc > 0 } {
         set loginfile [ open "$fname" r ]
         gets "$loginfile" host
         gets "$loginfile" pass
+        gets "$loginfile" default_board
         spawn luit -encoding GB18030 ssh "$host"
     }
 }
 # send_user $spawn_id
-set default_board "NewExpress"
 
 while 1 {
     expect {
