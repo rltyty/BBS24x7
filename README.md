@@ -55,7 +55,7 @@ BBS. So n different user logins, n Tmux windows in 1 Tmux session.
 Users can freely attach or detach the Tmux session anytime, from one virtual
 console or another, from local or remote, which is very flexible.
 
-e.g. To attach to a remote Tmux server session called 'smth'
+e.g. To attach to a remote Tmux server session called `smth`
 
 ```
 ssh rpi-lan -t tmux a -t smth
@@ -75,7 +75,8 @@ Requirements
 
 1. SSH client
 2. Tcl/Expect
-3. Tmux
+3. luit (>2.0)
+4. Tmux
 
 
 

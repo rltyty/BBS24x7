@@ -12,9 +12,9 @@ if { $argc > 0 } {
     set fname [lindex $argv 0]
     puts "$fname"
     if { [file exists "$fname"] } {
-        set passfile [ open "$fname" r ]
-        gets "$passfile" host
-        gets "$passfile" pass
+        set loginfile [ open "$fname" r ]
+        gets "$loginfile" host
+        gets "$loginfile" pass
         spawn luit -encoding GB18030 ssh "$host"
     }
 }
