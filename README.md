@@ -68,7 +68,7 @@ kill the broken Tmux session and create a new one.
 
 - SSH client
 - Tcl/Expect
-- luit (>2.0)
+- Luit (>2.0)
 - Tmux
 
 
