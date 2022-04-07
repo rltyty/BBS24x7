@@ -33,6 +33,8 @@ tmux new -d -s 'smth' -n 'main' -c "~/tmp" ';' \
 	"$RHUB/web/smth/smth.tcl $RHUB/web/smth/i.login" ';' \
     neww -d -c "~/tmp"  -n 'appleater' \
 	"$RHUB/web/smth/smth.tcl $RHUB/web/smth/a.login" ';'
+    neww -d -c "~/tmp"  -n 'nvim' \
+	"$RHUB/web/smth/smth.tcl $RHUB/web/smth/n.login" ';'
 
 
 
