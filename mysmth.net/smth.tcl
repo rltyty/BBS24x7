@@ -25,16 +25,16 @@ while 1 {
     expect {
         "password"                  {send "$pass\r";            exp_continue}
         "离开时留下的话"            {send "\r" ;                exp_continue}
-	"你同时上线的窗口数过多"    {send "1\r" ;		exp_continue}
+        "你同时上线的窗口数过多"    {send "1\r" ;		exp_continue}
         "欢迎您使用ssh方式访问"     {send "\r" ;                exp_continue}
         "如何处理以上密码输入错误记录"     {send "m\r" ;        exp_continue}
-        "按任何键继续"		    {send "\r" ;                exp_continue}
-        "按任意键继续"		    {send "\r" ;                exp_continue}
+        "按任何键继续"              {send "\r" ;                exp_continue}
+        "按任意键继续"              {send "\r" ;                exp_continue}
         -re "这是您第.*次上站"      {send "\r" ;                exp_continue}
         "近期热点"                  {send "\r" ;                exp_continue}
         "目前选择"                  {send "F\r";                exp_continue}
-	"个人定制区"                {send "s"; after 1000;  exp_continue}
-	"请输入讨论区名称"	    {send "$default_board\r"; break;}
+        "个人定制区"                {send "s"; after 1000;  exp_continue}
+        "请输入讨论区名称"          {send "$default_board\r"; break;}
     }
 }
 
@@ -54,7 +54,7 @@ interact {
 }
 
 
-#    \004		        {# log off
-#	send "e" ; after 1000; send "e"; after 1000;
-#	send "G\r" ; after 1000; send "4\r";
-#	after 1000;; send "\r" }
+#    \004                       {# log off
+#    send "e" ; after 1000; send "e"; after 1000;
+#    send "G\r" ; after 1000; send "4\r";
+#    after 1000;; send "\r" }
