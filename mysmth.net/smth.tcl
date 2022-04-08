@@ -25,7 +25,7 @@ while 1 {
     expect {
         "password"                  {send "$pass\r";            exp_continue}
         "离开时留下的话"            {send "\r" ;                exp_continue}
-        "你同时上线的窗口数过多"    {send "1\r" ;		exp_continue}
+        "你同时上线的窗口数过多"    {send "1\r" ;               exp_continue}
         "欢迎您使用ssh方式访问"     {send "\r" ;                exp_continue}
         "如何处理以上密码输入错误记录"     {send "m\r" ;        exp_continue}
         "按任何键继续"              {send "\r" ;                exp_continue}
