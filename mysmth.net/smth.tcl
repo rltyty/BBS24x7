@@ -4,22 +4,23 @@ package require Expect
 
 debug 0
 set timeout 60
-set host ""
+set login ""
 set pass ""
-send_user "Auto login script of SMTH.net\n"
+puts "\033\[1;44;33mAuto login script of MYSMTH.net\033\[m"
 
-if { $argc > 0 } {
-    set fname [lindex $argv 0]
-    puts "$fname"
-    if { [file exists "$fname"] } {
-        set loginfile [ open "$fname" r ]
-        gets "$loginfile" host
-        gets "$loginfile" pass
-        gets "$loginfile" default_board
-        spawn luit -encoding GB18030 ssh "$host"
-    }
+if {$argc != 2} {
+    puts "Usage: smth.tcl <login> <pass>, where <login> is usually the \
+value of Host field in a ssh_config file"
+    exit 1
 }
+
+set login [lindex $argv 0]
+set pass [lindex $argv 1]
+spawn luit -encoding GB18030 ssh "$login"
+
 # send_user $spawn_id
+#set default_board "NewExpress"
+set default_board "hotboards"
 
 while 1 {
     expect {

@@ -1,0 +1,1 @@
+5  0-23/2  * * *   mysmth.net/tmux-smth.sh mysmth.net/userdb > /dev/null 2>>${HOME}/tmp/smth-err.log
