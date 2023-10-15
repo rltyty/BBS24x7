@@ -1,42 +1,41 @@
 #!/bin/sh
 
-DEBUG=0
+DEBUG=${DEBUG:-0}
+MY_PATH=$(realpath $0)
+MY_DIR=${MY_PATH%/*}
+
+log_msg()
+{
+    if [ $DEBUG -eq 1 ]; then
+	printf "$1\n"
+    fi
+}
 
 if [ $# -ne 1 ]; then
     printf "Usage: tmux-smth.sh <user_db>\n"
     exit 1
 fi
 read -r user_count < $1
-if [ $DEBUG -eq 1 ]; then
-    printf "$user_count\n"
-fi
+log_msg "$user_count"
 if tmux has-session -t smth > /dev/null 2>&1 ; then
     job_count=$(tmux list-windows -t smth -F \
         "#{pane_pid}:#{pane_start_command}" | grep ".tcl" | wc -l)
-    if [ $DEBUG -eq 1 ]; then
-        echo "job_count:$job_count"
-        echo "user_count:$user_count"
-    fi
+        log_msg "job_count:$job_count"
+        log_msg "user_count:$user_count"
     if [ $job_count -eq $user_count ]; then
         # all smth user tmux windows are opened, all ssh connections are
         # assumed to be established.
         # TODO refine this logic, make sure all user accounts online
-        if [ $DEBUG -eq 1 ]; then
-            printf "Status OK. No change.\n"
-        fi
+        log_msg "Status OK. No change."
         exit 1
     else
         # some user windows are missing, clean the broken 'smth' session.
-        if [ $DEBUG -eq 1 ]; then
-            printf "Broken 'smth' session, destroy and recreate..\n"
-        fi
+        log_msg "Broken 'smth' session, destroy and recreate.."
         tmux kill-session -t smth
     fi
 fi
 
-if [ $DEBUG -eq 1 ]; then
-    printf "Create 'smth' session.\n"
-fi
+    log_msg "Create 'smth' session."
 
 # new-session(alias: new)
 tmux new -d -s 'smth' -n 'main' -c "~/tmp"
@@ -46,9 +45,10 @@ tmux new -d -s 'smth' -n 'main' -c "~/tmp"
     while read -r login
     do
         read -r pass
+        log_msg "login:$login"
         # new-window(alias:neww)
         tmux neww -d -c "~/tmp" -n "$login" -t "smth:$i" \
-            "$RHUB"/web/smth/smth.tcl "$login" "$pass"
+            ${MY_DIR}/smth.tcl "$login" "$pass"
             # sleep 60
         i=$((i+1))
     done
