@@ -2,4 +2,4 @@ repo_config.sh
 *.login
 !sample.login
 
-userdb.real
+userdb
