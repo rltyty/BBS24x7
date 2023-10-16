@@ -38,7 +38,7 @@ fi
     log_msg "Create 'smth' session."
 
 # new-session(alias: new)
-tmux new -d -s 'smth' -n 'main' -c "~/tmp" -y 40
+tmux new -d -s 'smth' -n 'main' -c "~/tmp" -y 40 -x 100
 {
     read -r tmp;
     i=1
