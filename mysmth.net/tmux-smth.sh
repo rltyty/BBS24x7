@@ -40,15 +40,15 @@ fi
 # new-session(alias: new)
 tmux new -d -s 'smth' -n 'main' -c "~/tmp" -y 40 -x 100
 {
-    read -r tmp;
+    read -r tmp; # skip the user count line
     i=1
-    while read -r login
+    while read -r line
     do
-        read -r pass
-        log_msg "login:$login"
+        log_msg "$line"
         # new-window(alias:neww)
-        tmux neww -d -c "~/tmp" -n "$login" -t "smth:$i" \
-            ${MY_DIR}/smth.tcl "$login" "$pass"
+        set -- $line
+        tmux neww -d -c "~/tmp" -n "$1" -t "smth:$i" \
+            ${MY_DIR}/smth.tcl $line
             # sleep 60
         i=$((i+1))
     done

@@ -7,35 +7,39 @@ A BBS on-hook script.
 
 ![][2]
 
-## 1. Unattended login
+## 1. Unattended login and User DB
 
-Use Tcl Expect script to login and rest on a specific discussion board. An
-account file needs to provide as input, which must use `.login` as file
-extension. The format of the content,
-e.g. user1.login:
+Use Tcl Expect script to login and rest on a specific discussion board.
+An user database file needs to provide as input. The format is:
 
 ```
-<connection_string>
-<password>
-<target_board>
+<number_of_users>
+<connection_string_user1> <password_of_user1> [<board_name>]
+<connection_string_user2> <password_of_user2> [<board_name>]
+...
+<connection_string_userN> <password_of_userN> [<board_name>]
 ```
 
-where <connection_string> can be:
+where <connection_string_userN> can be like:
 
 ```
-user1@bbs.mysmth.net
+foo@bbs.bar.net
 ```
 
 or
 
-host alias you set after `Host` in ~/.ssh/config
+host alias set for the `Host` field in ~/.ssh/config
 e.g.
 
 ```
-Host mysmth.u1			<-----
-    Hostname bbs.mysmth.net
-    User user1
+Host foo-bar                 <-----
+    Hostname bbs.bar.net
+    User foo
 ```
+
+and <board_name> specifies which BBS board will go to after login. This is
+optional, if omitted, the default board set in the corresponding *.tcl file
+will be used.
 
 ## 2. Keep alive when idle
 
@@ -62,24 +66,23 @@ ssh rpi-lan -t tmux a -t smth
 
 ## 5. Cron and watchdog
 
-Put the tmux launch script in cron table, and schedule it to run at
-every 2 hours for example. Every time when the script starts, it will examine
-if the BBS session exists and all login connections are alive. If not, it will
-kill the broken Tmux session and create a new one.
-
+Put the tmux launch script in cron table, and schedule it to run periodically
+like every 2 hours. Every time when the script starts, it will examine
+whether the BBS session exists and all login connections are alive. If not, it
+will kill the broken Tmux session and create a new one.
 
 # Requirements
 
-- SSH client
+- SSH/Telnet client
 - Tcl/Expect
 - Luit (2.0+)
 - Tmux
 
 NOTE:
-
-On Debian 11, the default luit(1.1.1) installed as a part of x11-utils is too
-old, may cause unexpected issues like segmentation fault. Build and install
-from luit 2.0 [source][1].
+`Luit` is used to translate character set and solve the "garbled text"
+problem when visit east asian BBS. On Debian 11, the default luit(1.1.1)
+installed as a part of x11-utils is too old, may cause unexpected issues
+like segmentation fault. Build and install from luit 2.0 [source][1].
 
 [1]: <https://invisible-island.net/luit/> "Luit"
 [2]: <Resources/screenshot.1.png> "Multiple BBS logins in Tmux"

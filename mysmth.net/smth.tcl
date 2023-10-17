@@ -4,23 +4,29 @@ package require Expect
 
 debug 0
 set timeout 60
+
+set default_board "hotboards"
 set login ""
 set pass ""
+set board ""
 puts "\033\[1;44;33mAuto login script of MYSMTH.net\033\[m"
 
-if {$argc != 2} {
-    puts "Usage: smth.tcl <login> <pass>, where <login> is usually the \
-value of Host field in a ssh_config file"
+if {$argc < 2} {
+    puts "Usage: smth.tcl <login> <pass> [<board>], where <login> is usually\
+the value of Host field in a ssh_config file"
     exit 1
 }
 
 set login [lindex $argv 0]
 set pass [lindex $argv 1]
+if {$argc >= 3} {
+    set board [lindex $argv 3]
+} else {
+    set board $default_board
+}
 spawn luit -encoding GB18030 ssh "$login"
 
 # send_user $spawn_id
-#set default_board "NewExpress"
-set default_board "hotboards"
 
 while 1 {
     expect {
@@ -35,7 +41,7 @@ while 1 {
         "近期热点"                  {send "\r" ;                exp_continue}
         "目前选择"                  {send "F\r";                exp_continue}
         "个人定制区"                {send "s"; after 1000;  exp_continue}
-        "请输入讨论区名称"          {send "$default_board\r"; break;}
+        "请输入讨论区名称"          {send "$board\r"; break;}
     }
 }
 

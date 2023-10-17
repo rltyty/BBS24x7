@@ -1,11 +1,6 @@
 5
-newsmth.a
-<passwd.a>
-newsmth.p
-<passwd.p>
-newsmth.s
-<passwd.s>
-newsmth.d
-<passwd.d>
-newsmth.i
-<passwd.i>
+newsmth.a <passwd.a> hotboards
+newsmth.p <passwd.p> NewExpress
+newsmth.s <passwd.s>
+newsmth.d <passwd.d> FamilyLife
+newsmth.i <passwd.i> WorkLife
