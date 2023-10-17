@@ -1,5 +1,9 @@
 # BBS24x7
-A BBS on-hook script.
+A BBS on-hook(挂机）framework and some examples.
+
+# Usage
+
+Check README in BBS subfolder.
 
 # Design
 
@@ -70,13 +74,6 @@ Put the tmux launch script in cron table, and schedule it to run periodically
 like every 2 hours. Every time when the script starts, it will examine
 whether the BBS session exists and all login connections are alive. If not, it
 will kill the broken Tmux session and create a new one.
-
-# Debugging
-
-```
-export DEBUG=1
-./tmux-smth.sh ./userdb
-```
 
 # Requirements
 
