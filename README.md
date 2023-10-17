@@ -71,6 +71,13 @@ like every 2 hours. Every time when the script starts, it will examine
 whether the BBS session exists and all login connections are alive. If not, it
 will kill the broken Tmux session and create a new one.
 
+# Debugging
+
+```
+export DEBUG=1
+./tmux-smth.sh ./userdb
+```
+
 # Requirements
 
 - SSH/Telnet client
