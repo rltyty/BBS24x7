@@ -59,7 +59,7 @@ ssh rpi-lan -t tmux a -t smth
 ## 5. Cron and watchdog
 
 Put the tmux launch script in cron table, and schedule it to run at
-every 2 hours for example. Everytime when the script starts, it will examine
+every 2 hours for example. Every time when the script starts, it will examine
 if the BBS session exists and all login connections are alive. If not, it will
 kill the broken Tmux session and create a new one.
 
@@ -71,6 +71,13 @@ kill the broken Tmux session and create a new one.
 - Luit (2.0+)
 - Tmux
 
+NOTE:
+
+On Debian 11, the default luit(1.1.1) installed as a part of x11-utils is too
+old, may cause unexpected issues like segmentation fault. Build and install
+from luit 2.0 [source][1].
+
+[1]: <https://invisible-island.net/luit/> "Luit"
 
 
 [//]: # (vim: tw=78:ts=8:sts=4:sw=4:noet:ft=markdown:norl:)
