@@ -3,6 +3,10 @@ A BBS on-hook script.
 
 # Design
 
+## 0. Screenshot
+
+![][2]
+
 ## 1. Unattended login
 
 Use Tcl Expect script to login and rest on a specific discussion board. An
@@ -78,6 +82,6 @@ old, may cause unexpected issues like segmentation fault. Build and install
 from luit 2.0 [source][1].
 
 [1]: <https://invisible-island.net/luit/> "Luit"
-
+[2]: <Resources/screenshot.1.png> "Multiple BBS logins in Tmux"
 
 [//]: # (vim: tw=78:ts=8:sts=4:sw=4:noet:ft=markdown:norl:)
