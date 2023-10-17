@@ -80,11 +80,11 @@ will kill the broken Tmux session and create a new one.
 
 NOTE:
 `Luit` is used to translate character set and solve the "garbled text"
-problem when visit east asian BBS. On Debian 11, the default luit(1.1.1)
+problem met when visit east Asian BBS. On Debian 11, the default luit(1.1.1)
 installed as a part of x11-utils is too old, may cause unexpected issues
 like segmentation fault. Build and install from luit 2.0 [source][1].
 
 [1]: <https://invisible-island.net/luit/> "Luit"
-[2]: <Resources/screenshot.1.png> "Multiple BBS logins in Tmux"
+[2]: <Resources/screenshot.1.png> "Multiple BBS logins in a Tmux session"
 
 [//]: # (vim: tw=78:ts=8:sts=4:sw=4:noet:ft=markdown:norl:)
