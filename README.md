@@ -1,5 +1,5 @@
 # BBS24x7
-A BBS on-hook framework and some examples.
+A BBS on-hook tool
 
 # Usage
 
