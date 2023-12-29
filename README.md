@@ -3,7 +3,7 @@ A BBS on-hook tool
 
 # Usage
 
-Check [user guide](guide.md)
+See [user guide](guide.md)
 
 # Design
 
@@ -91,7 +91,7 @@ recreated.
 
 # Docker support
 
-Check [docker guide](docker/README.md) and [`arg6/bbs24x7`][5] on dockerhub.
+See [docker guide](docker/README.md) and [`arg6/bbs24x7`][5] on dockerhub.
 
 # Requirements
 
