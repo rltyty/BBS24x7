@@ -2,13 +2,7 @@
 #                              Instructions
 # 1. Build the image:
 #
-# docker build -t <image_name> --no-cache --build-arg="SITE=mysmth.net" \
-#     -f ./docker/Dockerfile .
-#
-# or
-#
-# docker build -t <image_name> --no-cache --build-arg="SITE=mysmth.net" \
-#     --build-arg="RELEASE=11" -f ./docker/Dockerfile .
+# docker build -t <img_name> -f docker/Dockerfile .
 #
 # 2. Launch the container:
 #

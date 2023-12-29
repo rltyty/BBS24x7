@@ -1,4 +1,4 @@
-#password user      password            Host_in_ssh_conf    default_board
+#password user      password            loginstr        default_board
 # comment           test                test            test
 # another comment           test                test            test
        # comment doesn't begin at the 1st column of line

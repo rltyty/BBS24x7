@@ -1,30 +1,28 @@
 # BBS24x7
-A BBS on-hook(挂机）framework and some examples.
+A BBS on-hook framework and some examples.
 
 # Usage
 
-Check [user guide](docs/README.md)
+Check [user guide](guide.md)
 
 # Design
-
-## 0. Screenshot
 
 ![][2]
 
 ## 1. Unattended login and user information
 
 Use Tcl Expect script to login and rest on a specific discussion board.
-An user information file needs to provide as input. The format is:
+An user information file needs to provide as input. The format is quadruple
+strings for each line, which defines a user login:
 
 ```
-<number_of_users>
-<connection_string_user1> <password_of_user1> [<board_name>]
-<connection_string_user2> <password_of_user2> [<board_name>]
-...
-<connection_string_userN> <password_of_userN> [<board_name>]
-```
+<user>      <password>      <loginstr>      <default_board>
 
-where <connection_string_userN> can be like:
+```
+where each field is optional.
+
+If <loginstr> is set, it will be used as the SSH connection(`ssh <loginstr>`).
+It can be normal user@host format like
 
 ```
 foo@bbs.bar.net
@@ -32,8 +30,8 @@ foo@bbs.bar.net
 
 or
 
-host alias set for the `Host` field in ~/.ssh/config
-e.g.
+host alias set for the `Host` field in ~/.ssh/config like `bar.foo` in the
+below example
 
 ```
 Host bar.foo                 <-----
@@ -77,17 +75,28 @@ e.g. To attach to a Tmux session called `smth` on remote server `rpi-lan`
 ssh rpi-lan -t tmux a -t smth
 ```
 
-## 5. Cron and watchdog
+## 5. Multiple session support
+
+![][3]
+![][4]
+
+## 6. Cron and watchdog
 
 Put the tmux launch script in cron table, and schedule it to run periodically
-like every 2 hours. Every time when the script starts, it will examine
-whether the BBS session exists and all login connections are alive. If not, it
-will kill the broken Tmux session and create a new one.
+like every hour. Every time when the script starts, it will examine whether
+the BBS session exists and all login connections are alive. If not, it will
+recover the broken Tmux session. If userinfo file is updated and newer than
+the timestamp when the session was created, the session will get killed and
+recreated.
+
+# Docker support
+
+Check [docker guide](docker/README.md) and [`arg6/bbs24x7`][5] on dockerhub.
 
 # Requirements
 
 - SSH/Telnet client
-- Tcl/Expect
+- Tcl/Expect and Tcllib
 - Luit (2.0+)
 - Tmux
 
@@ -95,9 +104,15 @@ NOTE:
 `Luit` is used to translate character set and solve the "garbled text"
 problem met when visit east Asian BBS. On Debian 11, the default luit(1.1.1)
 installed as a part of x11-utils is too old, may cause unexpected issues
-like segmentation fault. Build and install from luit 2.0 [source][1].
+like segmentation fault. Build and install from luit 2.0 [source][1]. On
+Debian 12, the default luit installed is v2.0, so no need to build from
+source.
 
 [1]: <https://invisible-island.net/luit/> "Luit"
 [2]: <Resources/screenshot.1.png> "Multiple BBS logins in a Tmux session"
+[3]: <Resources/multi-session.1.png> "Multiple sessions 1"
+[4]: <Resources/multi-session.2.png> "Multiple sessions 2"
+[5]: <https://hub.docker.com/r/arg6/bbs24x7> "arg6/bbs24x7"
+
 
 [//]: # (vim: tw=78:ts=8:sts=4:sw=4:noet:ft=markdown:norl:)
