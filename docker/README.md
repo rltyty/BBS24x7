@@ -1,5 +1,9 @@
 # Docker Usage
 
+## Pull image from dockerhub
+
+    docker pull arg6/bbs24x7
+
 ## Build image
 
 ### A basic build without any user data
