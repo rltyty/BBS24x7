@@ -1,0 +1,5 @@
+LANG=en_US.UTF-8
+LANGUAGE=en_US:en
+LC_ALL=en_US.UTF-8
+APP=/home/appuser/bbs24x7
+0-59/2 * * * * /home/appuser/bbs24x7/main.sh /home/appuser/bbs24x7/local /home/appuser/bbs24x7/external > /dev/null 2>>/home/appuser/tmp/bbs24x7-err.log

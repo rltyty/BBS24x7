@@ -1,36 +1,39 @@
-#!/usr/bin/tclsh
+#!/usr/bin/env tclsh
 
-package require Expect 
+# ######################################################################
+# Expect dialog script for [水木社区](bbs.newsmth.net)
+# ######################################################################
+
+package require Expect
 
 debug 0
 set timeout 60
 
-set default_board "hotboards"
-set login ""
-set pass ""
-set board ""
-puts "\033\[1;44;33mAuto login script of MYSMTH.net\033\[m"
+set BBS_INFO "\[水木社区\](bbs.newsmth.net)"
+set BBS_HOST "bbs.newsmth.net"
+set DEFAULT_BOARD "hotboards"
 
-if {$argc < 2} {
-    puts "Usage: smth.tcl <login> <pass> [<board>], where <login> is usually\
-the value of Host field in a ssh_config file"
-    exit 1
+if { $has_l } {
+    set loginstr $params(l)
+}  else {
+    set loginstr $params(u)@$BBS_HOST
 }
 
-set login [lindex $argv 0]
-set pass [lindex $argv 1]
-if {$argc >= 3} {
-    set board [lindex $argv 3]
+if { ! $has_b } {
+    set board $DEFAULT_BOARD
 } else {
-    set board $default_board
+    set board $params(b)
 }
-spawn luit -encoding GB18030 ssh "$login"
+
+puts "\033\[1;44;33mAuto login script of $BBS_INFO\033\[m"
+spawn luit -encoding GB18030 ssh "$loginstr"
 
 # send_user $spawn_id
 
 while 1 {
     expect {
-        "password"                  {send "$pass\r";            exp_continue}
+        "Are you sure you want to"  {send "yes\r";              exp_continue}
+        "password"                  {send "$params(p)\r";       exp_continue}
         "离开时留下的话"            {send "\r" ;                exp_continue}
         "你同时上线的窗口数过多"    {send "1\r" ;               exp_continue}
         "欢迎您使用ssh方式访问"     {send "\r" ;                exp_continue}
@@ -40,7 +43,7 @@ while 1 {
         -re "这是您第.*次上站"      {send "\r" ;                exp_continue}
         "近期热点"                  {send "\r" ;                exp_continue}
         "目前选择"                  {send "F\r";                exp_continue}
-        "个人定制区"                {send "s"; after 1000;  exp_continue}
+        "个人定制区"                {send "s"; after 2000;      exp_continue}
         "请输入讨论区名称"          {send "$board\r"; break;}
     }
 }
@@ -65,3 +68,4 @@ interact {
 #    send "e" ; after 1000; send "e"; after 1000;
 #    send "G\r" ; after 1000; send "4\r";
 #    after 1000;; send "\r" }
+

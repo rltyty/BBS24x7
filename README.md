@@ -3,7 +3,7 @@ A BBS on-hook(挂机）framework and some examples.
 
 # Usage
 
-Check README in BBS subfolder.
+Check [user guide](docs/README.md)
 
 # Design
 
@@ -11,10 +11,10 @@ Check README in BBS subfolder.
 
 ![][2]
 
-## 1. Unattended login and User DB
+## 1. Unattended login and user information
 
 Use Tcl Expect script to login and rest on a specific discussion board.
-An user database file needs to provide as input. The format is:
+An user information file needs to provide as input. The format is:
 
 ```
 <number_of_users>
@@ -36,14 +36,23 @@ host alias set for the `Host` field in ~/.ssh/config
 e.g.
 
 ```
-Host foo-bar                 <-----
+Host bar.foo                 <-----
     Hostname bbs.bar.net
     User foo
 ```
 
-and <board_name> specifies which BBS board will go to after login. This is
-optional, if omitted, the default board set in the corresponding *.tcl file
-will be used.
+This SSH configuration way can provide more control of login. For example,
+if you want to connect behind a forwar proxy
+```
+Host bar.foo
+    Hostname bbs.bar.net
+    User foo
+    ProxyCommand `which ncat` --proxy-type socks5 --proxy 127.0.0.1:1080 %h %p
+```
+
+<board_name> specifies which BBS board the cursor will rest in after login.
+This field is optional and the default board set in the corresponding *.tcl
+file will be used if omitted.
 
 ## 2. Keep alive when idle
 
@@ -62,7 +71,7 @@ BBS. So n different user logins, n Tmux windows in 1 Tmux session.
 Users can freely attach or detach the Tmux session anytime, from one virtual
 console or another, from local or remote, which is very flexible.
 
-e.g. To attach to a remote Tmux server session called `smth`
+e.g. To attach to a Tmux session called `smth` on remote server `rpi-lan`
 
 ```
 ssh rpi-lan -t tmux a -t smth

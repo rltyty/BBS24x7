@@ -1,5 +1,4 @@
+.gitconfig
+.DS_Store
 repo_config.sh
-*.login
-!sample.login
-
-userdb
+userinfo

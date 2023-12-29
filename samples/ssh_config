@@ -1,0 +1,26 @@
+# Put the below configuration in ~/.ssh/config
+
+Host bbs.1
+    HostName bbs.xxx.net
+    User user1
+
+Host bbs.2
+    Hostname bbs.xxx.net
+    User user2
+
+Host bbs.3
+    Hostname bbs.xxx.net
+    User user3
+
+# SSH over SOCKS5 proxy, `ncat` is required
+Host bbs.4.thru_proxy
+    Hostname bbs.xxx.net
+    User user4
+    ProxyCommand `which ncat` --proxy-type socks5 --proxy 127.0.0.1:1080 %h %p
+
+Host bbs.5.keyauth
+    Hostname bbs.xxx.net
+    User user5
+    IdentityFile ~/.ssh/id_rsa
+
+# vim: tw=78:ts=8:sts=4:sw=4:ft=sshconfig:norl:

@@ -1,0 +1,17 @@
+#password user      password            Host_in_ssh_conf    default_board
+# comment           test                test            test
+# another comment           test                test            test
+       # comment doesn't begin at the 1st column of line
+       # another comment doesn't begin at the 1st column of line
+
+
+*           adfjdf"j8j$jkd"fa       bbs1.a              *     # inline comment 1
+        *           $8"8'ja"lj"df     bbs1.p            VIM
+*           pa88ssddr               bbs1.s              AWK
+
+        *           i8ad"111              bbs1.d   Love
+           
+        *           ooapow"dd       bbs1.i           ITNEWS  # inline comment 2
+
+#  userinfo.awk ~~~~
+
