@@ -74,17 +74,17 @@ do
             userinfo="$OPTARG"
             ;;
         h)
-            printf "$HELP"
+            printf "%s\n" "$HELP"
             exit 0
             ;;
         :)
             printf "Missing argument for option [%s].\n" "$OPTARG"
-            printf "$HELP"
+            printf "%s\n" "$HELP"
             exit 2
             ;;
         ?)
             printf "Unknown option [%s].\n" "$OPTARG"
-            printf "$HELP"
+            printf "%s\n" "$HELP"
             exit 1
             ;;
     esac
@@ -96,8 +96,8 @@ shift $(($OPTIND-1))
 # ---------------------------- MAIN PROGRAM ----------------------------
 file_exists_or_exit() # $1: file path, $2: msg
 {
-    [ -n "$1" ] && [ -f $1 ] || {
-        printf "$2:[$1] does not exist.\n"
+    [ -n "$1" ] && [ -f "$1" ] || {
+        printf "%s:[%s] does not exist.\n" "$2" "$1"
         exit 127
     }
 }
@@ -105,7 +105,7 @@ file_exists_or_exit() # $1: file path, $2: msg
 log_msg()
 {
     if [ $DEBUG -eq 1 ]; then
-        printf "$1\n"
+        printf "%s\n" "$1"
     fi
 }
 
@@ -125,10 +125,10 @@ check_win_count() # $1: sname $2: userinfo; return: wincount == usercount
     u_count=$(awk "${AWK_USER_NUM}" "$2")
     log_msg "${u_count}"
     w_count=$(tmux list-windows -t "$1" -F \
-        "#{pane_pid}:#{pane_start_command}" | grep ".tcl" | wc -l)
-    w_count=$(printf $w_count | sed -e 's/^ *//' -e 's/ *$//')
+        "#{pane_pid}:#{pane_start_command}" | grep -c ".tcl")
+    w_count=$(printf "%s" "$w_count" | sed -e 's/^ *//' -e 's/ *$//')
     log_msg "w_count:${w_count}, u_count:${u_count}"
-    [ $w_count -eq ${u_count} ]
+    [ "$w_count" = "$u_count" ]
 }
 
 create_session() # $1: sname, $2: dialog, $3: userinfo
@@ -171,13 +171,12 @@ create_session() # $1: sname, $2: dialog, $3: userinfo
 
     # new-session(alias: new)
     if $refresh; then
-        tmux new -d -s "${sname}" -n 'main' -c "~/tmp" -y 30 -x 100
+        tmux new -d -s "${sname}" -n 'main' -c "${HOME}/tmp" -y 30 -x 100
         tmux setenv -t "${sname}" SESS_CRE_TIME $(date +%s)
         log_msg "Session [${sname}] created."
     fi
 
     awk "${AWK_USERINFO_PARSER}" "${userinfo}" | {
-        i=1
         while read -r user pass loginstr board
         do
             opts=""
@@ -185,21 +184,26 @@ create_session() # $1: sname, $2: dialog, $3: userinfo
                 else unset user; fi # unset user to use loginstr as win_name
             if [ "x*" != "x$pass" ]; then opts="$opts -p $pass"; fi
             if [ "x*" != "x$loginstr" ]; then opts="$opts -l $loginstr"; fi
-            if [ "x*" != "x$board" ]; then opts="$opts -b $board"; fi
+            if [ "x*" != "x$board" ]; then opts="$opts -b $board "; fi
 
             log_msg "opts: [$opts]."
             log_msg "${user:=$loginstr} $mydir $dialog"
             # new-window(alias:neww)
             ## no action will be done if a same window already exists
-            tmux neww -dS -n "${user:=$loginstr}" -t "${sname}" \
-                "$mydir"/expscripts/main.tcl -e "$dialog" $opts \
-                > /dev/null 2>&1
+            if [ $DEBUG -eq 1 ]; then
+                tmux neww -dS -n "${user:=$loginstr}" \
+                    "$mydir"/expscripts/main.tcl -e "$dialog" $opts
+            else
+                tmux neww -dS -n "${user:=$loginstr}" \
+                    "$mydir"/expscripts/main.tcl -e "$dialog" $opts \
+                    > /dev/null 2>&1
+            fi
         done
     }
 }
 
 # create a session
-[ -z $sname ] || [ -z $dialog ] || [ -z $userinfo ] \
+[ -z "$sname" ] || [ -z "$dialog" ] || [ -z "$userinfo" ] \
     || create_session "$sname" "$dialog" "$userinfo"
 
 for session
