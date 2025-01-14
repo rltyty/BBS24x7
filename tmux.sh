@@ -74,17 +74,19 @@ do
             userinfo="$OPTARG"
             ;;
         h)
-            printf "%s\n" "$HELP"
+            # NOTE: escape chars don't take effect in format string `%s` of
+            # printf
+            printf "$HELP\n"
             exit 0
             ;;
         :)
             printf "Missing argument for option [%s].\n" "$OPTARG"
-            printf "%s\n" "$HELP"
+            printf "$HELP\n"
             exit 2
             ;;
         ?)
             printf "Unknown option [%s].\n" "$OPTARG"
-            printf "%s\n" "$HELP"
+            printf "$HELP\n"
             exit 1
             ;;
     esac
